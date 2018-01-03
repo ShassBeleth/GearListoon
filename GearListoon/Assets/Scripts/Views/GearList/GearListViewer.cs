@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,40 +14,40 @@ namespace GearListoon.Views.GearList {
 		/// <summary>
 		/// 頭ボタン押下時イベントハンドラ
 		/// </summary>
-		public Action onClickedHeadButtonEventHandler;
+		public Action OnClickedHeadButtonEventHandler { set; get; }
 
 		/// <summary>
 		/// 頭ボタン押下時イベント
 		/// </summary>
 		public void OnClickedHeadButton() {
-			if( this.onClickedHeadButtonEventHandler != null )
-				this.onClickedHeadButtonEventHandler.Invoke();
+			if( this.OnClickedHeadButtonEventHandler != null )
+				this.OnClickedHeadButtonEventHandler.Invoke();
 		}
 
 		/// <summary>
 		/// 服ボタン押下時イベントハンドラ
 		/// </summary>
-		public Action onClickedClotheButtonEventHandler;
+		public Action OnClickedClotheButtonEventHandler { set; get; }
 
 		/// <summary>
 		/// 服ボタン押下時イベント
 		/// </summary>
 		public void OnClickedClotheButton() {
-			if( this.onClickedClotheButtonEventHandler != null )
-				this.onClickedClotheButtonEventHandler.Invoke();
+			if( this.OnClickedClotheButtonEventHandler != null )
+				this.OnClickedClotheButtonEventHandler.Invoke();
 		}
 
 		/// <summary>
 		/// 靴ボタン押下時イベントハンドラ
 		/// </summary>
-		public Action onClickedShoesButtonEventHandler;
+		public Action OnClickedShoesButtonEventHandler { set; get; }
 		
 		/// <summary>
 		/// 靴ボタン押下時イベント
 		/// </summary>
 		public void OnClickedShoesButton() {
-			if( this.onClickedShoesButtonEventHandler != null )
-				this.onClickedShoesButtonEventHandler.Invoke();
+			if( this.OnClickedShoesButtonEventHandler != null )
+				this.OnClickedShoesButtonEventHandler.Invoke();
 		}
 
 		#endregion
@@ -100,57 +99,58 @@ namespace GearListoon.Views.GearList {
 			this.HeadScrollContent = GameObject.Find( "HeadScrollContent" );
 			this.ClotheScrollContent = GameObject.Find( "ClotheScrollContent" );
 			this.ShoesScrollContent = GameObject.Find( "ShoesScrollContent" );
+			
+		}
 
-			this.GearNode = Resources.Load( "GearList/ScrollViewNode/GearNode" ) as GameObject;
+		/// <summary>
+		/// 頭リスト初期化
+		/// </summary>
+		public void ResetHeadScrollContent() {
+			foreach( Transform child in this.HeadScrollContent.transform ) {
+				GameObject.Destroy( child.gameObject );
+			}
+		}
 
+		/// <summary>
+		/// 服リスト初期化
+		/// </summary>
+		public void ResetClotheScrollContent() {
+			foreach( Transform child in this.ClotheScrollContent.transform ) {
+				GameObject.Destroy( child.gameObject );
+			}
+		}
+
+		/// <summary>
+		/// 靴リスト初期化
+		/// </summary>
+		public void ResetShoesScrollContent() {
+			foreach( Transform child in this.ShoesScrollContent.transform ) {
+				GameObject.Destroy( child.gameObject );
+			}
 		}
 
 		/// <summary>
 		/// 頭ノードを設定
 		/// </summary>
-		/// <param name="nodes">ノード一覧</param>
-		public void SetHeadScrollViewNode( List<string> nodes ) {
-			foreach( Transform child in this.HeadScrollContent.transform ) {
-				GameObject.Destroy( child.gameObject );
-			}
-			for( int i = 0 ; i < nodes.Count ; i++ ) { 
-				GameObject obj = Instantiate( this.GearNode );
-				obj.name = nodes[ i ];
-				obj.GetComponent<Image>().color = new Color( ( 0.1f * i ) , 0 , 0 );
-				obj.transform.SetParent( this.HeadScrollContent.transform );
-			}
+		/// <param name="nodes">ノード</param>
+		public void SetHeadScrollViewNode( GearNodeViewer node ) {
+			node.transform.SetParent( this.HeadScrollContent.transform );
 		}
 
 		/// <summary>
 		/// 服ノードを設定
 		/// </summary>
-		/// <param name="nodes">ノード一覧</param>
-		public void SetClotheScrollViewNode( List<string> nodes ) {
-			foreach( Transform child in this.ClotheScrollContent.transform ) {
-				GameObject.Destroy( child.gameObject );
-			}
-			for( int i = 0 ; i < nodes.Count ; i++ ) {
-				GameObject obj = Instantiate( this.GearNode );
-				obj.name = nodes[ i ];
-				obj.GetComponent<Image>().color = new Color( ( 0.1f * i ) , 0 , 0 );
-				obj.transform.SetParent( this.ClotheScrollContent.transform );
-			}
+		/// <param name="nodes">ノード</param>
+		public void SetClotheScrollViewNode( GearNodeViewer node ) {
+			node.transform.SetParent( this.ShoesScrollContent.transform );
 		}
 
 		/// <summary>
 		/// 靴ノードを設定
 		/// </summary>
-		/// <param name="nodes">ノード一覧</param>
-		public void SetShoesScrollViewNode( List<string> nodes ) {
-			foreach( Transform child in this.ShoesScrollContent.transform ) {
-				GameObject.Destroy( child.gameObject );
-			}
-			for( int i = 0 ; i < nodes.Count ; i++ ) {
-				GameObject obj = Instantiate( this.GearNode );
-				obj.name = nodes[ i ];
-				obj.GetComponent<Image>().color = new Color( ( 0.1f * i ) , 0 , 0 );
-				obj.transform.SetParent( this.ShoesScrollContent.transform );
-			}
+		/// <param name="nodes">ノード</param>
+		public void SetShoesScrollViewNode( GearNodeViewer node ) {
+			node.transform.SetParent( this.ShoesScrollContent.transform );
 		}
 
 		/// <summary>

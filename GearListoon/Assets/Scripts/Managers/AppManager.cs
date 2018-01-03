@@ -1,4 +1,4 @@
-﻿using GearListoon.Presentations.GearList;
+﻿using GearListoon.Presenters.GearList;
 using UnityEngine;
 
 namespace GearListoon.Managers {
