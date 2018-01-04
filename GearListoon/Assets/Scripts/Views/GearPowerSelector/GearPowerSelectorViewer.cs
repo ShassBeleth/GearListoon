@@ -8,14 +8,7 @@ namespace GearListoon.Views.GearPowerSelector {
 	/// </summary>
 	public class GearPowerSelectorViewer : MonoBehaviour {
 
-		/// <summary>
-		/// スクロールコンテント
-		/// </summary>
-		private GameObject ScrollContent;
-
-		public void Awake() {
-			this.ScrollContent = this.transform.Find( "Panel" ).Find( "Scroll View" ).Find( "Viewport" ).Find( "Content" ).gameObject;
-		}
+		#region イベントとイベントハンドラ
 
 		/// <summary>
 		/// キャンセルボタン押下時イベント
@@ -30,6 +23,21 @@ namespace GearListoon.Views.GearPowerSelector {
 				this.OnClickedCancelButtonEventHandler.Invoke();
 		}
 
+		#endregion
+
+		#region 部品
+
+		/// <summary>
+		/// スクロールコンテント
+		/// </summary>
+		private GameObject ScrollContent;
+
+		#endregion
+
+		public void Awake() {
+			this.ScrollContent = this.transform.Find( "Panel" ).Find( "Scroll View" ).Find( "Viewport" ).Find( "Content" ).gameObject;
+		}
+		
 		/// <summary>
 		/// 一覧初期化
 		/// </summary>

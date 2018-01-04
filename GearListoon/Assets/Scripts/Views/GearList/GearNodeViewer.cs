@@ -156,6 +156,8 @@ namespace GearListoon.Views.GearList {
 
 		public void Awake() {
 
+			#region 各部品の参照取得
+
 			this.Name = this.gameObject.transform.Find( "Name" ).transform.Find( "Text" ).GetComponent<Text>();
 
 			this.Brand = this.gameObject.transform.Find( "BrandButton" ).transform.Find( "Text" ).GetComponent<Text>();
@@ -167,6 +169,8 @@ namespace GearListoon.Views.GearList {
 			this.Sub1GearPower = this.gameObject.transform.Find( "Sub1" ).transform.Find( "Text" ).GetComponent<Text>();
 			this.Sub2GearPower = this.gameObject.transform.Find( "Sub2" ).transform.Find( "Text" ).GetComponent<Text>();
 			this.Sub3GearPower = this.gameObject.transform.Find( "Sub3" ).transform.Find( "Text" ).GetComponent<Text>();
+
+			#endregion
 
 		}
 		
@@ -207,8 +211,7 @@ namespace GearListoon.Views.GearList {
 
 			}
 		}
-
-
+		
 	}
 
 }

@@ -1233,6 +1233,33 @@ namespace GearListoon.Services {
 					sub1PowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
 					sub2PowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
 					sub3PowerId = "816e1f6e-371a-4983-9ef6-b7465ee1315d"
+				} ,
+				new GearModel() {
+					id = "aaa" ,
+					name = "aaaaaaaaaaaaaaaa" ,
+					brandId = "ea9041d1-82ba-48a0-a05a-f46e325cf3a3" ,
+					mainPowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
+					sub1PowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
+					sub2PowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
+					sub3PowerId = "816e1f6e-371a-4983-9ef6-b7465ee1315d"
+				} ,
+				new GearModel() {
+					id = "aaa" ,
+					name = "aaaaaaaaaaaaaaaa" ,
+					brandId = "ea9041d1-82ba-48a0-a05a-f46e325cf3a3" ,
+					mainPowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
+					sub1PowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
+					sub2PowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
+					sub3PowerId = "816e1f6e-371a-4983-9ef6-b7465ee1315d"
+				} ,
+				new GearModel() {
+					id = "aaa" ,
+					name = "aaaaaaaaaaaaaaaa" ,
+					brandId = "ea9041d1-82ba-48a0-a05a-f46e325cf3a3" ,
+					mainPowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
+					sub1PowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
+					sub2PowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
+					sub3PowerId = "816e1f6e-371a-4983-9ef6-b7465ee1315d"
 				}
 			};
 			foreach( GearModel gear in this.headGears ) {

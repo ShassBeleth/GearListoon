@@ -93,13 +93,35 @@ namespace GearListoon.Views.GearList {
 
 		public void Start() {
 
+			#region 画面部品参照取得
 			this.HeadScrollView = GameObject.Find( "HeadScrollView" ).GetComponent<ScrollRect>();
 			this.ClotheScrollView = GameObject.Find( "ClotheScrollView" ).GetComponent<ScrollRect>();
 			this.ShoesScrollView = GameObject.Find( "ShoesScrollView" ).GetComponent<ScrollRect>();
 			this.HeadScrollContent = GameObject.Find( "HeadScrollContent" );
 			this.ClotheScrollContent = GameObject.Find( "ClotheScrollContent" );
 			this.ShoesScrollContent = GameObject.Find( "ShoesScrollContent" );
-			
+			#endregion
+
+		}
+
+		#region 各スクロールコンテントの初期化
+
+		/// <summary>
+		/// スクロールコンテント初期化
+		/// </summary>
+		/// <param name="gearPosition">0:頭,1:服,2:靴</param>
+		public void ResetScrollContent( int gearPosition ) {
+			switch( gearPosition ) {
+				case 0:
+					this.ResetHeadScrollContent();
+					break;
+				case 1:
+					this.ResetClotheScrollContent();
+					break;
+				case 2:
+					this.ResetShoesScrollContent();
+					break;
+			}
 		}
 
 		/// <summary>
@@ -129,6 +151,29 @@ namespace GearListoon.Views.GearList {
 			}
 		}
 
+		#endregion
+
+		#region 各ノードの親を設定
+
+		/// <summary>
+		/// ノードを設定
+		/// </summary>
+		/// <param name="gearPosition">0:頭,1:服,2:靴</param>
+		/// <param name="node">ノード</param>
+		public void SetScrollViewNode( int gearPosition , GearNodeViewer node ) {
+			switch( gearPosition ) {
+				case 0:
+					this.SetHeadScrollViewNode( node );
+					break;
+				case 1:
+					this.SetClotheScrollViewNode( node );
+					break;
+				case 2:
+					this.SetShoesScrollViewNode( node );
+					break;
+			}
+		}
+
 		/// <summary>
 		/// 頭ノードを設定
 		/// </summary>
@@ -151,6 +196,28 @@ namespace GearListoon.Views.GearList {
 		/// <param name="nodes">ノード</param>
 		public void SetShoesScrollViewNode( GearNodeViewer node ) {
 			node.transform.SetParent( this.ShoesScrollContent.transform );
+		}
+
+		#endregion
+
+		#region 各スクロールビューを表示
+
+		/// <summary>
+		/// スクロールビューを表示
+		/// </summary>
+		/// <param name="gearPosition"></param>
+		public void ShowScrollView( int gearPosition ) {
+			switch( gearPosition ) {
+				case 0:
+					this.ShowHeadScrollView();
+					break;
+				case 1:
+					this.ShowClotheScrollView();
+					break;
+				case 2:
+					this.ShowShoesScrollView();
+					break;
+			}
 		}
 
 		/// <summary>
@@ -188,6 +255,8 @@ namespace GearListoon.Views.GearList {
 			if( this.ShoesScrollView != null )
 				this.ShoesScrollView.gameObject.SetActive( true );
 		}
+
+		#endregion
 
 	}
 

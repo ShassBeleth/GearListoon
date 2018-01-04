@@ -10,16 +10,7 @@ namespace GearListoon.Views.GearPowerSelector {
 	/// </summary>
 	public class GearPowerSelectorNodeViewer : MonoBehaviour {
 
-		/// <summary>
-		/// ギア名
-		/// </summary>
-		private Text Name { set; get; }
-
-		public PowerModel PowerModel { private set; get; }
-
-		public void Awake() {
-			this.Name = this.transform.Find( "Button" ).Find( "Text" ).GetComponent<Text>();
-		}
+		#region イベントとイベントハンドラ
 
 		/// <summary>
 		/// ノードクリック時イベントハンドラ
@@ -32,6 +23,26 @@ namespace GearListoon.Views.GearPowerSelector {
 		public void OnClickedNodeButton() {
 			if( this.OnClickedNodeButtonEventHandler != null )
 				this.OnClickedNodeButtonEventHandler.Invoke();
+		}
+
+		#endregion
+
+		#region 部品
+
+		/// <summary>
+		/// ギア名
+		/// </summary>
+		private Text Name { set; get; }
+
+		#endregion
+
+		/// <summary>
+		/// パワーモデル
+		/// </summary>
+		public PowerModel PowerModel { private set; get; }
+
+		public void Awake() {
+			this.Name = this.transform.Find( "Button" ).Find( "Text" ).GetComponent<Text>();
 		}
 
 		/// <summary>
