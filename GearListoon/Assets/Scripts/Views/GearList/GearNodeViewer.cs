@@ -187,25 +187,34 @@ namespace GearListoon.Views.GearList {
 					this.Brand.text = gear.brand.id;
 					this.BrandName.text = gear.brand.name;
 
-					if( gear.brand.easyToHoldPower != null )
-						this.EasyPower.text = gear.brand.easyToHoldPower.name;
+					this.EasyPower.text = 
+						gear.brand.easyToHoldPower != null ? 
+						gear.brand.easyToHoldPower.name : 
+						"無し";
 
-					if( gear.brand.difficultToHoldPower != null )
-						this.HardPower.text = gear.brand.difficultToHoldPower.name;
+					this.HardPower.text =
+						gear.brand.difficultToHoldPower != null ?
+						gear.brand.difficultToHoldPower.name :
+						"無し";
 
 				}
 
-				if( gear.mainPower != null )
-					this.MainGearPower.text = gear.mainPower.name;
+				this.MainGearPower.text = gear.mainPower.name;
 
-				if( gear.sub1Power != null )
-					this.Sub1GearPower.text = gear.sub1Power.name;
+				this.Sub1GearPower.text =
+					gear.sub1Power != null ?
+					gear.sub1Power.name :
+					"無し";
 
-				if( gear.sub2Power != null )
-					this.Sub2GearPower.text = gear.sub2Power.name;
+				this.Sub2GearPower.text =
+					gear.sub2Power != null ?
+					gear.sub2Power.name :
+					"無し";
 
-				if( gear.sub3Power != null )
-					this.Sub3GearPower.text = gear.sub3Power.name;
+				this.Sub3GearPower.text =
+					gear.sub3Power != null ?
+					gear.sub3Power.name :
+					"無し";
 
 				this.Name.text = gear.name;
 

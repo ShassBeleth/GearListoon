@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GearListoon.Models;
 using GearListoon.Services;
+using GearListoon.Views.BrandSelector;
 using GearListoon.Views.GearList;
 using GearListoon.Views.GearPowerSelector;
 using UnityEngine;
@@ -30,6 +31,11 @@ namespace GearListoon.Presenters.GearList {
 		/// </summary>
 		private GearPowerSelectorViewer GearPowerSelectorViewer { set; get; }
 
+		/// <summary>
+		/// ブランド選択Viewer
+		/// </summary>
+		private BrandSelectorViewer BrandSelectorViewer { set; get; }
+
 		#endregion
 
 		#region Prefabs
@@ -44,6 +50,11 @@ namespace GearListoon.Presenters.GearList {
 		/// </summary>
 		private GameObject GearPowerSelectorNode { set; get; }
 
+		/// <summary>
+		/// ブランドノード
+		/// </summary>
+		private GameObject BrandSelectorNode { set; get; }
+
 		#endregion
 		
 		/// <summary>
@@ -57,6 +68,16 @@ namespace GearListoon.Presenters.GearList {
 		private Action SelectedGearPowerCallback { set; get; }
 
 		/// <summary>
+		/// ブランド選択ダイアログから選んだブランド
+		/// </summary>
+		private BrandModel selectedBrand;
+
+		/// <summary>
+		/// ブランド選択ダイアログでブランドを得ランんだ後のコールバック
+		/// </summary>
+		private Action SelectedBrandCallback { set; get; }
+		
+		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		public GearListPresenter() {
@@ -67,6 +88,7 @@ namespace GearListoon.Presenters.GearList {
 
 			this.GearListViewer = GameObject.Find( "GearList" ).GetComponent<GearListViewer>();
 			this.GearPowerSelectorViewer = GameObject.Find( "GearPowerSelector" ).GetComponent<GearPowerSelectorViewer>();
+			this.BrandSelectorViewer = GameObject.Find( "BrandSelector" ).GetComponent<BrandSelectorViewer>();
 
 			#endregion
 
@@ -82,6 +104,7 @@ namespace GearListoon.Presenters.GearList {
 
 			this.GearNode = Resources.Load( "GearList/ScrollViewNode/GearNode" ) as GameObject;
 			this.GearPowerSelectorNode = Resources.Load( "GearList/ScrollViewNode/GearPowerNode" ) as GameObject;
+			this.BrandSelectorNode = Resources.Load( "BrandList/ScrollViewNode/BrandNode" ) as GameObject;
 
 			#endregion
 
@@ -102,6 +125,34 @@ namespace GearListoon.Presenters.GearList {
 
 			#endregion
 
+			#region ブランド選択ダイアログ初期設定
+
+			foreach( BrandModel brand in this.Service.GetBrands() ) {
+
+				// ノードのインスタンス作成
+				GameObject nodeObj = GameObject.Instantiate( this.BrandSelectorNode );
+				BrandSelectorNodeViewer nodeViewer = nodeObj.GetComponent<BrandSelectorNodeViewer>();
+				this.BrandSelectorViewer.SetScrollNode( nodeViewer );
+				nodeViewer.SetPower( brand );
+				nodeViewer.OnClickedNodeButtonEventHandler = () => {
+					this.OnClickedBrandNodeButton( nodeViewer );
+				};
+			}
+			this.BrandSelectorViewer.gameObject.SetActive( false );
+
+			#endregion
+
+		}
+
+		/// <summary>
+		/// ブランドノードクリック時イベント
+		/// </summary>
+		/// <param name="nodeViewer">ノード</param>
+		private void OnClickedBrandNodeButton( BrandSelectorNodeViewer nodeViewer ) {
+			this.selectedBrand = nodeViewer.BrandModel;
+			this.BrandSelectorViewer.gameObject.SetActive( false );
+			if( this.SelectedBrandCallback != null )
+				this.SelectedBrandCallback.Invoke();
 		}
 
 		/// <summary>
@@ -175,6 +226,20 @@ namespace GearListoon.Presenters.GearList {
 
 		#endregion
 
+		/// <summary>
+		/// ブランド押下時イベント
+		/// </summary>
+		/// <param name="model">モデル</param>
+		/// <param name="viewer">押したノードのスクリプト</param>
+		private void OnClickedBrandButton( GearModel model , GearNodeViewer viewer ) {
+			this.ShowBrandSelectorViewer();
+			this.SelectedBrandCallback = () => {
+				model.brand = this.selectedBrand;
+				model.brandId = this.selectedBrand.id;
+				viewer.SetNode( model );
+			};
+		}
+
 		#region ヘッダ部の各ボタン押下時イベント
 
 		/// <summary>
@@ -229,6 +294,9 @@ namespace GearListoon.Presenters.GearList {
 					nodeViewer.OnClickedSubGear3ButtonEventHandler = () => {
 						this.OnClickedSub3PowerButton( model , nodeViewer );
 					};
+					nodeViewer.OnClickedBrandButtonHandler = () => {
+						this.OnClickedBrandButton( model , nodeViewer );
+					};
 				}
 				this.GearListViewer.ShowScrollView( gearPosition );
 			};
@@ -241,6 +309,13 @@ namespace GearListoon.Presenters.GearList {
 		/// </summary>
 		private void ShowGearPowerSelectorViewer() {
 			this.GearPowerSelectorViewer.gameObject.SetActive( true );
+		}
+
+		/// <summary>
+		/// ブランド選択ダイアログ表示
+		/// </summary>
+		private void ShowBrandSelectorViewer() {
+			this.BrandSelectorViewer.gameObject.SetActive( true );
 		}
 
 	}
