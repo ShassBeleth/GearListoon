@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using GearListoon.Models;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -279,6 +281,42 @@ namespace GearListoon.Views.GearList {
 
 		#endregion
 		
+		/// <summary>
+		/// 頭ギア一覧取得
+		/// </summary>
+		/// <returns></returns>
+		public List<GearModel> GetHeadGears() {
+			List<GearModel> gears = new List<GearModel>();
+			foreach( Transform child in this.HeadScrollContent.transform ) {
+				gears.Add( child.GetComponent<GearNodeViewer>().Gear );
+			}
+			return gears;
+		}
+
+		/// <summary>
+		/// 服ギア一覧取得
+		/// </summary>
+		/// <returns></returns>
+		public List<GearModel> GetClotheGears() {
+			List<GearModel> gears = new List<GearModel>();
+			foreach( Transform child in this.ClotheScrollContent.transform ) {
+				gears.Add( child.GetComponent<GearNodeViewer>().Gear );
+			}
+			return gears;
+		}
+
+		/// <summary>
+		/// 靴ギア一覧取得
+		/// </summary>
+		/// <returns></returns>
+		public List<GearModel> GetShoesGears() {
+			List<GearModel> gears = new List<GearModel>();
+			foreach( Transform child in this.ShoesScrollContent.transform ) {
+				gears.Add( child.GetComponent<GearNodeViewer>().Gear );
+			}
+			return gears;
+		}
+
 	}
 
 }

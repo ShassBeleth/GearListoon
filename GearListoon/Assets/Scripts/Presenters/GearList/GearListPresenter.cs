@@ -182,6 +182,7 @@ namespace GearListoon.Presenters.GearList {
 				model.mainPower = this.selectedGearPower;
 				model.mainPowerId = this.selectedGearPower.id;
 				viewer.SetNode( model );
+				this.UpdateGears();
 			};
 		}
 
@@ -196,6 +197,7 @@ namespace GearListoon.Presenters.GearList {
 				model.sub1Power = this.selectedGearPower;
 				model.sub1PowerId = this.selectedGearPower.id;
 				viewer.SetNode( model );
+				this.UpdateGears();
 			};
 		}
 
@@ -210,6 +212,7 @@ namespace GearListoon.Presenters.GearList {
 				model.sub2Power = this.selectedGearPower;
 				model.sub2PowerId = this.selectedGearPower.id;
 				viewer.SetNode( model );
+				this.UpdateGears();
 			};
 		}
 
@@ -224,6 +227,7 @@ namespace GearListoon.Presenters.GearList {
 				model.sub3Power = this.selectedGearPower;
 				model.sub3PowerId = this.selectedGearPower.id;
 				viewer.SetNode( model );
+				this.UpdateGears();
 			};
 		}
 
@@ -240,7 +244,25 @@ namespace GearListoon.Presenters.GearList {
 				model.brand = this.selectedBrand;
 				model.brandId = this.selectedBrand.id;
 				viewer.SetNode( model );
+				this.UpdateGears();
 			};
+		}
+
+		/// <summary>
+		/// ギア一覧を更新する
+		/// </summary>
+		private void UpdateGears() {
+			switch( this.GearListViewer.GearPosition ) {
+				case 0:
+					this.GearService.UpdateHeadGears( this.GearListViewer.GetHeadGears() );
+					break;
+				case 1:
+					this.GearService.UpdateClotheGears( this.GearListViewer.GetClotheGears() );
+					break;
+				case 2:
+					this.GearService.UpdateShoesGears( this.GearListViewer.GetShoesGears() );
+					break;
+			}
 		}
 
 		#region ヘッダ部の各ボタン押下時イベント

@@ -59,9 +59,16 @@ namespace GearListoon.Services {
 		private List<GearModel> shoesGears;
 
 		/// <summary>
+		/// CSVService
+		/// </summary>
+		private CSVService csvService;
+
+		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		public Service( CSVService csvService ) {
+
+			this.csvService = csvService;
 
 			#region サブ一覧
 			this.subWeapons = new List<SubWeaponModel>() {
@@ -1415,6 +1422,33 @@ namespace GearListoon.Services {
 		/// <returns>靴ギア一覧</returns>
 		public List<GearModel> GetShoesGears() {
 			return this.shoesGears;
+		}
+
+		/// <summary>
+		/// 頭ギア更新
+		/// </summary>
+		/// <param name="gears"></param>
+		public void UpdateHeadGears( List<GearModel> gears ) {
+			this.headGears = gears;
+			this.csvService.WriteHeadGearCsv( gears );
+		}
+
+		/// <summary>
+		/// 頭ギア更新
+		/// </summary>
+		/// <param name="gears"></param>
+		public void UpdateClotheGears( List<GearModel> gears ) {
+			this.clotheGears = gears;
+			this.csvService.WriteClotheGearCsv( gears );
+		}
+
+		/// <summary>
+		/// 頭ギア更新
+		/// </summary>
+		/// <param name="gears"></param>
+		public void UpdateShoesGears( List<GearModel> gears ) {
+			this.shoesGears = gears;
+			this.csvService.WriteShoesGearCsv( gears );
 		}
 
 	}
