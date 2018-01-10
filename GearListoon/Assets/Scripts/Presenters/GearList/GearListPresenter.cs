@@ -17,8 +17,8 @@ namespace GearListoon.Presenters.GearList {
 		/// <summary>
 		/// Service
 		/// </summary>
-		private Service Service { set; get; }
-
+		private Service GearService { set; get; }
+		
 		#region Viewer
 
 		/// <summary>
@@ -76,14 +76,14 @@ namespace GearListoon.Presenters.GearList {
 		/// ブランド選択ダイアログでブランドを得ランんだ後のコールバック
 		/// </summary>
 		private Action SelectedBrandCallback { set; get; }
-		
+
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		public GearListPresenter() {
 
-			this.Service = new Service();
-
+			this.GearService = new Service( new CSVService() );
+			
 			#region Viewerの取得
 
 			this.GearListViewer = GameObject.Find( "GearList" ).GetComponent<GearListViewer>();
@@ -97,6 +97,7 @@ namespace GearListoon.Presenters.GearList {
 			this.GearListViewer.OnClickedHeadButtonEventHandler = this.OnClickedHeadButtonEvent();
 			this.GearListViewer.OnClickedClotheButtonEventHandler = this.OnClickedClotheButtonEvent();
 			this.GearListViewer.OnClickedShoesButtonEventHandler = this.OnClickedShoesButtonEvent();
+			this.GearListViewer.OnClickedAddGearButtonEventHandler = this.OnClickedAddGearButtonEvent();
 
 			#endregion
 
@@ -110,7 +111,7 @@ namespace GearListoon.Presenters.GearList {
 
 			#region ギアパワー選択ダイアログ初期設定
 			
-			foreach( PowerModel power in this.Service.GetPowers() ) {
+			foreach( PowerModel power in this.GearService.GetPowers() ) {
 
 				// ノードのインスタンス作成
 				GameObject nodeObj = GameObject.Instantiate( this.GearPowerSelectorNode );
@@ -127,7 +128,7 @@ namespace GearListoon.Presenters.GearList {
 
 			#region ブランド選択ダイアログ初期設定
 
-			foreach( BrandModel brand in this.Service.GetBrands() ) {
+			foreach( BrandModel brand in this.GearService.GetBrands() ) {
 
 				// ノードのインスタンス作成
 				GameObject nodeObj = GameObject.Instantiate( this.BrandSelectorNode );
@@ -141,6 +142,8 @@ namespace GearListoon.Presenters.GearList {
 			this.BrandSelectorViewer.gameObject.SetActive( false );
 
 			#endregion
+
+			this.GearListViewer.OnClickedHeadButtonEventHandler.Invoke();
 
 		}
 
@@ -247,7 +250,7 @@ namespace GearListoon.Presenters.GearList {
 		/// </summary>
 		/// <returns>イベント</returns>
 		private Action OnClickedHeadButtonEvent() {
-			return this.OnClickedHeaderGearButtonEvent( this.Service.GetHeadGears() , 0 );
+			return this.OnClickedGearButtonEvent( this.GearService.GetHeadGears() , 0 );
 		}
 
 		/// <summary>
@@ -255,15 +258,15 @@ namespace GearListoon.Presenters.GearList {
 		/// </summary>
 		/// <returns>イベント</returns>
 		private Action OnClickedClotheButtonEvent() {
-			return this.OnClickedHeaderGearButtonEvent( this.Service.GetClotheGears() , 1 );
+			return this.OnClickedGearButtonEvent( this.GearService.GetClotheGears() , 1 );
 		}
-
+		
 		/// <summary>
 		/// 靴ボタン押下時イベント
 		/// </summary>
 		/// <returns>イベント</returns>
 		private Action OnClickedShoesButtonEvent() {
-			return this.OnClickedHeaderGearButtonEvent( this.Service.GetShoesGears() , 2 );
+			return this.OnClickedGearButtonEvent( this.GearService.GetShoesGears() , 2 );
 		}
 		
 		/// <summary>
@@ -272,7 +275,7 @@ namespace GearListoon.Presenters.GearList {
 		/// <param name="gears"></param>
 		/// <param name="gearPosition">0:頭,1:服,2:靴</param>
 		/// <returns></returns>
-		private Action OnClickedHeaderGearButtonEvent( List<GearModel> gears , int gearPosition ) {
+		private Action OnClickedGearButtonEvent( List<GearModel> gears , int gearPosition ) {
 			return () => {
 				this.GearListViewer.ResetScrollContent( gearPosition );
 				foreach( GearModel model in gears ) {
@@ -318,6 +321,38 @@ namespace GearListoon.Presenters.GearList {
 			this.BrandSelectorViewer.gameObject.SetActive( true );
 		}
 
+		/// <summary>
+		/// ギア追加ボタン押下時イベント
+		/// </summary>
+		/// <returns></returns>
+		private Action OnClickedAddGearButtonEvent() {
+			return () => {
+				GearModel model = new GearModel() {
+					id = Guid.NewGuid().ToString() ,
+					name = ""
+				};
+				switch( this.GearListViewer.GearPosition ) {
+					case 0:
+						this.GearService.GetHeadGears().Add( model );
+						this.OnClickedHeadButtonEvent().Invoke();
+						new CSVService().WriteHeadGearCsv( this.GearService.GetHeadGears() );
+						break;
+					case 1:
+						this.GearService.GetClotheGears().Add( model );
+						this.OnClickedClotheButtonEvent().Invoke();
+						new CSVService().WriteClotheGearCsv( this.GearService.GetClotheGears() );
+						break;
+					case 2:
+						this.GearService.GetShoesGears().Add( model );
+						this.OnClickedShoesButtonEvent().Invoke();
+						new CSVService().WriteShoesGearCsv( this.GearService.GetShoesGears() );
+						break;
+					default:
+						break;
+				}
+			};
+		}
+		
 	}
 
 }

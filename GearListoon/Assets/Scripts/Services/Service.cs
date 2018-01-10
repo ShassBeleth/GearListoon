@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GearListoon.Models;
-using UnityEngine;
 
 namespace GearListoon.Services {
 
@@ -63,7 +61,7 @@ namespace GearListoon.Services {
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		public Service() {
+		public Service( CSVService csvService ) {
 
 			#region サブ一覧
 			this.subWeapons = new List<SubWeaponModel>() {
@@ -1218,50 +1216,7 @@ namespace GearListoon.Services {
 			#endregion
 
 			#region 頭ギア一覧
-			this.headGears = new List<GearModel>() {
-				new GearModel() {
-					id = "de37459d-3911-434d-a75f-cd4526aec458" ,
-					name = "ステカセヘッドホン" ,
-					brandId = "850a760b-304e-419d-a520-cd8182eaeab7" ,
-					mainPowerId = "816e1f6e-371a-4983-9ef6-b7465ee1315d" ,
-				} ,
-				new GearModel() {
-					id = "2afd0842-56d6-4b46-8aff-e69538dfd032" ,
-					name = "ヘッドライトヘルム" ,
-					brandId = "ea9041d1-82ba-48a0-a05a-f46e325cf3a3" ,
-					mainPowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
-					sub1PowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
-					sub2PowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
-					sub3PowerId = "816e1f6e-371a-4983-9ef6-b7465ee1315d"
-				} ,
-				new GearModel() {
-					id = "aaa" ,
-					name = "aaaaaaaaaaaaaaaa" ,
-					brandId = "ea9041d1-82ba-48a0-a05a-f46e325cf3a3" ,
-					mainPowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
-					sub1PowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
-					sub2PowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
-					sub3PowerId = "816e1f6e-371a-4983-9ef6-b7465ee1315d"
-				} ,
-				new GearModel() {
-					id = "aaa" ,
-					name = "aaaaaaaaaaaaaaaa" ,
-					brandId = "ea9041d1-82ba-48a0-a05a-f46e325cf3a3" ,
-					mainPowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
-					sub1PowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
-					sub2PowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
-					sub3PowerId = "816e1f6e-371a-4983-9ef6-b7465ee1315d"
-				} ,
-				new GearModel() {
-					id = "aaa" ,
-					name = "aaaaaaaaaaaaaaaa" ,
-					brandId = "ea9041d1-82ba-48a0-a05a-f46e325cf3a3" ,
-					mainPowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
-					sub1PowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
-					sub2PowerId = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
-					sub3PowerId = "816e1f6e-371a-4983-9ef6-b7465ee1315d"
-				}
-			};
+			this.headGears = csvService.ReadHeadGearCsv();
 			foreach( GearModel gear in this.headGears ) {
 				gear.brand = this.GetBrand( gear.brandId );
 				gear.mainPower = this.GetPower( gear.mainPowerId );
@@ -1273,7 +1228,7 @@ namespace GearListoon.Services {
 			#endregion
 
 			#region 服ギア一覧
-			this.clotheGears = new List<GearModel>();
+			this.clotheGears = csvService.ReadClotheGearCsv();
 			foreach( GearModel gear in this.clotheGears ) {
 				gear.brand = this.GetBrand( gear.brandId );
 				gear.mainPower = this.GetPower( gear.mainPowerId );
@@ -1284,7 +1239,7 @@ namespace GearListoon.Services {
 			#endregion
 
 			#region 靴ギア一覧
-			this.shoesGears = new List<GearModel>();
+			this.shoesGears = csvService.ReadShoesGearCsv();
 			foreach( GearModel gear in this.shoesGears ) {
 				gear.brand = this.GetBrand( gear.brandId );
 				gear.mainPower = this.GetPower( gear.mainPowerId );

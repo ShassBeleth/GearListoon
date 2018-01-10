@@ -50,6 +50,19 @@ namespace GearListoon.Views.GearList {
 				this.OnClickedShoesButtonEventHandler.Invoke();
 		}
 
+		/// <summary>
+		/// ギア追加ボタン押下時イベントハンドラ
+		/// </summary>
+		public Action OnClickedAddGearButtonEventHandler { set; get; }
+
+		/// <summary>
+		/// ギア追加ボタン押下時イベント
+		/// </summary>
+		public void OnClickedAddGearButton() {
+			if( this.OnClickedAddGearButtonEventHandler != null )
+				this.OnClickedAddGearButtonEventHandler.Invoke();
+		}
+
 		#endregion
 
 		#region 画面部品
@@ -187,7 +200,7 @@ namespace GearListoon.Views.GearList {
 		/// </summary>
 		/// <param name="nodes">ノード</param>
 		public void SetClotheScrollViewNode( GearNodeViewer node ) {
-			node.transform.SetParent( this.ShoesScrollContent.transform );
+			node.transform.SetParent( this.ClotheScrollContent.transform );
 		}
 
 		/// <summary>
@@ -199,6 +212,11 @@ namespace GearListoon.Views.GearList {
 		}
 
 		#endregion
+
+		/// <summary>
+		/// 選択中のギア
+		/// </summary>
+		public int GearPosition { private set; get; }
 
 		#region 各スクロールビューを表示
 
@@ -224,6 +242,7 @@ namespace GearListoon.Views.GearList {
 		/// 頭のスクロールビューを表示
 		/// </summary>
 		public void ShowHeadScrollView() {
+			this.GearPosition = 0;
 			if( this.HeadScrollView != null )
 				this.HeadScrollView.gameObject.SetActive( true );
 			if( this.ClotheScrollView != null )
@@ -236,6 +255,7 @@ namespace GearListoon.Views.GearList {
 		/// 服のスクロールビューを表示
 		/// </summary>
 		public void ShowClotheScrollView() {
+			this.GearPosition = 1;
 			if( this.HeadScrollView != null )
 				this.HeadScrollView.gameObject.SetActive( false );
 			if( this.ClotheScrollView != null )
@@ -248,6 +268,7 @@ namespace GearListoon.Views.GearList {
 		/// 靴のスクロールビューを表示
 		/// </summary>
 		public void ShowShoesScrollView() {
+			this.GearPosition = 2;
 			if( this.HeadScrollView != null )
 				this.HeadScrollView.gameObject.SetActive( false );
 			if( this.ClotheScrollView != null )
@@ -257,7 +278,7 @@ namespace GearListoon.Views.GearList {
 		}
 
 		#endregion
-
+		
 	}
 
 }

@@ -173,13 +173,20 @@ namespace GearListoon.Views.GearList {
 			#endregion
 
 		}
+
+		/// <summary>
+		/// ギア
+		/// </summary>
+		public GearModel Gear { private set; get; }
 		
 		/// <summary>
 		/// ノードの設定
 		/// </summary>
 		/// <param name="gear"></param>
 		public void SetNode( GearModel gear ) {
-			
+
+			this.Gear = gear;
+						
 			if( gear != null ) {
 
 				if( gear.brand != null ) {
@@ -199,22 +206,26 @@ namespace GearListoon.Views.GearList {
 
 				}
 
-				this.MainGearPower.text = gear.mainPower.name;
+				if( gear.mainPower != null )
+					this.MainGearPower.text = gear.mainPower.name;
 
-				this.Sub1GearPower.text =
-					gear.sub1Power != null ?
-					gear.sub1Power.name :
-					"無し";
+				if( gear.sub1Power != null )
+					this.Sub1GearPower.text =
+						gear.sub1Power != null ?
+						gear.sub1Power.name :
+						"無し";
 
-				this.Sub2GearPower.text =
-					gear.sub2Power != null ?
-					gear.sub2Power.name :
-					"無し";
+				if( gear.sub2Power != null )
+					this.Sub2GearPower.text =
+						gear.sub2Power != null ?
+						gear.sub2Power.name :
+						"無し";
 
-				this.Sub3GearPower.text =
-					gear.sub3Power != null ?
-					gear.sub3Power.name :
-					"無し";
+				if( gear.sub3Power != null )
+					this.Sub3GearPower.text =
+						gear.sub3Power != null ?
+						gear.sub3Power.name :
+						"無し";
 
 				this.Name.text = gear.name;
 
