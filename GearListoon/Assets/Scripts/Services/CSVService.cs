@@ -101,9 +101,8 @@ namespace GearListoon.Services {
 
 			if( !Directory.Exists( path ) )
 				Directory.CreateDirectory( path );
-
-			FileStream fileStream = new FileStream( path + csvName , FileMode.OpenOrCreate , FileAccess.Write );
-			StreamWriter streamWriter = new StreamWriter( fileStream );
+			
+			StreamWriter streamWriter = new StreamWriter( path + csvName , false );
 
 			foreach( GearModel gear in gears ) {
 				streamWriter.Write(

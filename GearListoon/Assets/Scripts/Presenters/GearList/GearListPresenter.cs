@@ -122,6 +122,9 @@ namespace GearListoon.Presenters.GearList {
 					this.OnClickedGearPowerNodeButton( nodeViewer );
 				};
 			}
+			this.GearPowerSelectorViewer.OnClickedCancelButtonEventHandler = () => {
+				this.GearPowerSelectorViewer.gameObject.SetActive( false );
+			};
 			this.GearPowerSelectorViewer.gameObject.SetActive( false );
 
 			#endregion
@@ -139,6 +142,9 @@ namespace GearListoon.Presenters.GearList {
 					this.OnClickedBrandNodeButton( nodeViewer );
 				};
 			}
+			this.BrandSelectorViewer.OnClickedCancelButtonEventHandler = () => {
+				this.BrandSelectorViewer.gameObject.SetActive( false );
+			};
 			this.BrandSelectorViewer.gameObject.SetActive( false );
 
 			#endregion
@@ -322,11 +328,15 @@ namespace GearListoon.Presenters.GearList {
 					nodeViewer.OnClickedBrandButtonHandler = () => {
 						this.OnClickedBrandButton( model , nodeViewer );
 					};
+					nodeViewer.OnClickedDeleteButtonEventHandler = () => {
+						this.GearService.DeleteGear( model , gearPosition );
+						this.OnClickedGearButtonEvent( gears , gearPosition ).Invoke();
+					};
 				}
 				this.GearListViewer.ShowScrollView( gearPosition );
 			};
 		}
-
+		
 		#endregion
 
 		/// <summary>

@@ -1451,6 +1451,45 @@ namespace GearListoon.Services {
 			this.csvService.WriteShoesGearCsv( gears );
 		}
 
+		/// <summary>
+		/// ギア削除
+		/// </summary>
+		/// <param name="model">削除ギア</param>
+		/// <param name="gearPosition">0:頭,1:服,2:</param>
+		public void DeleteGear( GearModel model , int gearPosition ) {
+			switch( gearPosition ) {
+				case 0:
+					for( int i = 0 ; i < this.headGears.Count ; i++ ) {
+						if( this.headGears[ i ].id.Equals( model.id ) ) {
+							this.headGears.RemoveAt( i );
+							this.csvService.WriteHeadGearCsv( this.headGears );
+							break;
+						}
+					}
+					break;
+
+				case 1:
+					for( int i = 0 ; i < this.clotheGears.Count ; i++ ) {
+						if( this.clotheGears[ i ].id.Equals( model.id ) ) {
+							this.clotheGears.RemoveAt( i );
+							this.csvService.WriteClotheGearCsv( this.clotheGears );
+							break;
+						}
+					}
+					break;
+
+				case 2:
+					for( int i = 0 ; i < this.shoesGears.Count ; i++ ) {
+						if( this.shoesGears[ i ].id.Equals( model.id ) ) {
+							this.shoesGears.RemoveAt( i );
+							this.csvService.WriteShoesGearCsv( this.shoesGears );
+							break;
+						}
+					}
+					break;
+			}
+		}
+
 	}
 
 }
