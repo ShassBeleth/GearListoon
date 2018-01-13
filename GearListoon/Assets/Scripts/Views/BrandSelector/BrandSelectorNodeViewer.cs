@@ -1,5 +1,6 @@
 ﻿using System;
 using GearListoon.Models;
+using GearListoon.Services;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,6 +42,21 @@ public class BrandSelectorNodeViewer : MonoBehaviour {
 	/// つきにくいギアパワー名
 	/// </summary>
 	private Text HardToHoldPowerName { set; get; }
+
+	/// <summary>
+	/// ブランドアイコン
+	/// </summary>
+	private Image BrandIcon { set; get; }
+
+	/// <summary>
+	/// つきやすいギアパワーアイコン
+	/// </summary>
+	private Image EasyToHoldPowerIcon { set; get; }
+
+	/// <summary>
+	/// つきにくいギアパワーアイコン
+	/// </summary>
+	private Image HardToHoldPowerIcon { set; get; }
 	
 	#endregion
 
@@ -54,6 +70,9 @@ public class BrandSelectorNodeViewer : MonoBehaviour {
 		this.Name = buttonTransform.Find( "Name" ).GetComponent<Text>();
 		this.EasyToHoldPowerName = buttonTransform.Find( "EasyToHoldPowerName" ).GetComponent<Text>();
 		this.HardToHoldPowerName = buttonTransform.Find( "HardToHoldPowerName" ).GetComponent<Text>();
+		this.BrandIcon = buttonTransform.Find( "Icon" ).GetComponent<Image>();
+		this.EasyToHoldPowerIcon = buttonTransform.Find( "EasyToHoldPowerIcon" ).GetComponent<Image>();
+		this.HardToHoldPowerIcon = buttonTransform.Find( "HardToHoldPowerIcon" ).GetComponent<Image>();
 	}
 
 	/// <summary>
@@ -65,6 +84,13 @@ public class BrandSelectorNodeViewer : MonoBehaviour {
 		this.EasyToHoldPowerName.text = brand.easyToHoldPower != null ? brand.easyToHoldPower.name : "無し";
 		this.HardToHoldPowerName.text = brand.difficultToHoldPower != null ? brand.difficultToHoldPower.name : "無し";
 		this.BrandModel = brand;
+		this.BrandIcon.sprite = SpriteService.GetInstance().GetBrandSpriteFromDictionary( brand.id );
+		this.EasyToHoldPowerIcon.sprite = SpriteService.GetInstance().GetGearPowerSpriteFromDictionary(
+			brand.easyToHoldPower != null ? brand.easyToHoldPower.id : "無し"
+		);
+		this.HardToHoldPowerIcon.sprite = SpriteService.GetInstance().GetGearPowerSpriteFromDictionary(
+		  brand.difficultToHoldPower != null ? brand.difficultToHoldPower.id : "無し"
+	  );
 	}
 
 }

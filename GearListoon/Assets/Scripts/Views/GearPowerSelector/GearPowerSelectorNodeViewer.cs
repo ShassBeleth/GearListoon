@@ -1,5 +1,6 @@
 ﻿using System;
 using GearListoon.Models;
+using GearListoon.Services;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,6 +35,11 @@ namespace GearListoon.Views.GearPowerSelector {
 		/// </summary>
 		private Text Name { set; get; }
 
+		/// <summary>
+		/// アイコン画像
+		/// </summary>
+		private Image Icon { set; get; }
+
 		#endregion
 
 		/// <summary>
@@ -43,6 +49,7 @@ namespace GearListoon.Views.GearPowerSelector {
 
 		public void Awake() {
 			this.Name = this.transform.Find( "Button" ).Find( "Text" ).GetComponent<Text>();
+			this.Icon = this.transform.Find( "Button" ).Find( "IconImage" ).GetComponent<Image>();
 		}
 
 		/// <summary>
@@ -51,7 +58,9 @@ namespace GearListoon.Views.GearPowerSelector {
 		/// <param name="power">パワー</param>
 		public void SetPower( PowerModel power ) {
 			this.Name.text = power.name;
+			this.Icon.sprite = SpriteService.GetInstance().GetGearPowerSpriteFromDictionary( power.id );
 			this.PowerModel = power;
+
 		}
 		
 	}

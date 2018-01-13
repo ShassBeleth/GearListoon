@@ -1,5 +1,6 @@
 ﻿using System;
 using GearListoon.Models;
+using GearListoon.Services;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -115,7 +116,7 @@ namespace GearListoon.Views.GearList {
 		/// <summary>
 		/// ブランドアイコン
 		/// </summary>
-		private Text Brand;
+		private Image Brand;
 
 		/// <summary>
 		/// ブランド名
@@ -125,50 +126,54 @@ namespace GearListoon.Views.GearList {
 		/// <summary>
 		/// つきやすいギアパワー
 		/// </summary>
-		private Text EasyPower;
+		private Image EasyPower;
 
 		/// <summary>
 		/// つきにくいギアパワー
 		/// </summary>
-		private Text HardPower;
+		private Image HardPower;
 		
 		/// <summary>
 		/// メインギアパワー
 		/// </summary>
-		private Text MainGearPower;
+		private Image MainGearPower;
 
 		/// <summary>
 		/// サブ1ギアパワー
 		/// </summary>
-		private Text Sub1GearPower;
+		private Image Sub1GearPower;
 
 		/// <summary>
 		/// サブ2ギアパワー
 		/// </summary>
-		private Text Sub2GearPower;
+		private Image Sub2GearPower;
 
 		/// <summary>
 		/// サブ3ギアパワー
 		/// </summary>
-		private Text Sub3GearPower;
+		private Image Sub3GearPower;
 
 		#endregion
 
+		private SpriteService spriteService;
+
 		public void Awake() {
+
+			this.spriteService = SpriteService.GetInstance();
 
 			#region 各部品の参照取得
 
 			this.Name = this.gameObject.transform.Find( "Name" ).transform.Find( "Text" ).GetComponent<Text>();
 
-			this.Brand = this.gameObject.transform.Find( "BrandButton" ).transform.Find( "Text" ).GetComponent<Text>();
+			this.Brand = this.gameObject.transform.Find( "BrandButton" ).GetComponent<Image>();
 			this.BrandName = this.gameObject.transform.Find( "BrandName" ).GetComponent<Text>();
-			this.EasyPower = this.gameObject.transform.Find( "EasyPower" ).transform.Find( "Text" ).GetComponent<Text>();
-			this.HardPower = this.gameObject.transform.Find( "HardPower" ).transform.Find( "Text" ).GetComponent<Text>();
+			this.EasyPower = this.gameObject.transform.Find( "EasyPower" ).GetComponent<Image>();
+			this.HardPower = this.gameObject.transform.Find( "HardPower" ).GetComponent<Image>();
 
-			this.MainGearPower = this.gameObject.transform.Find( "Main" ).transform.Find( "Text" ).GetComponent<Text>();
-			this.Sub1GearPower = this.gameObject.transform.Find( "Sub1" ).transform.Find( "Text" ).GetComponent<Text>();
-			this.Sub2GearPower = this.gameObject.transform.Find( "Sub2" ).transform.Find( "Text" ).GetComponent<Text>();
-			this.Sub3GearPower = this.gameObject.transform.Find( "Sub3" ).transform.Find( "Text" ).GetComponent<Text>();
+			this.MainGearPower = this.gameObject.transform.Find( "Main" ).GetComponent<Image>();
+			this.Sub1GearPower = this.gameObject.transform.Find( "Sub1" ).GetComponent<Image>();
+			this.Sub2GearPower = this.gameObject.transform.Find( "Sub2" ).GetComponent<Image>();
+			this.Sub3GearPower = this.gameObject.transform.Find( "Sub3" ).GetComponent<Image>();
 
 			#endregion
 
@@ -191,41 +196,28 @@ namespace GearListoon.Views.GearList {
 
 				if( gear.brand != null ) {
 
-					this.Brand.text = gear.brand.id;
 					this.BrandName.text = gear.brand.name;
-
-					this.EasyPower.text = 
-						gear.brand.easyToHoldPower != null ? 
-						gear.brand.easyToHoldPower.name : 
-						"無し";
-
-					this.HardPower.text =
-						gear.brand.difficultToHoldPower != null ?
-						gear.brand.difficultToHoldPower.name :
-						"無し";
+					this.Brand.sprite = this.spriteService.GetBrandSpriteFromDictionary( gear.brandId );
+					this.EasyPower.sprite = this.spriteService.GetGearPowerSpriteFromDictionary( gear.brand.easyToHoldPowerId );
+					this.HardPower.sprite = this.spriteService.GetGearPowerSpriteFromDictionary( gear.brand.difficultToHoldPowerId );
 
 				}
 
-				if( gear.mainPower != null )
-					this.MainGearPower.text = gear.mainPower.name;
+				if( gear.mainPower != null ) {
+					this.MainGearPower.sprite = this.spriteService.GetGearPowerSpriteFromDictionary( gear.mainPowerId );
+				}
 
-				if( gear.sub1Power != null )
-					this.Sub1GearPower.text =
-						gear.sub1Power != null ?
-						gear.sub1Power.name :
-						"無し";
+				if( gear.sub1Power != null ) {
+					this.Sub1GearPower.sprite = this.spriteService.GetGearPowerSpriteFromDictionary( gear.sub1PowerId );
+				}
 
-				if( gear.sub2Power != null )
-					this.Sub2GearPower.text =
-						gear.sub2Power != null ?
-						gear.sub2Power.name :
-						"無し";
+				if( gear.sub2Power != null ) {
+					this.Sub2GearPower.sprite = this.spriteService.GetGearPowerSpriteFromDictionary( gear.sub2PowerId );
+				}
 
-				if( gear.sub3Power != null )
-					this.Sub3GearPower.text =
-						gear.sub3Power != null ?
-						gear.sub3Power.name :
-						"無し";
+				if( gear.sub3Power != null ) {
+					this.Sub3GearPower.sprite = this.spriteService.GetGearPowerSpriteFromDictionary( gear.sub3PowerId );
+				}
 
 				this.Name.text = gear.name;
 

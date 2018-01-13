@@ -1009,47 +1009,47 @@ namespace GearListoon.Services {
 			this.powers = new List<PowerModel>() {
 				new PowerModel() {
 					id = "9a28baa7-520a-4e1a-9348-391d5ed05a99" ,
-					name = "サブ性能"
+					name = "サブ性能UP"
 				} ,
 				new PowerModel() {
 					id = "b71c74a0-f4a7-425a-b01f-455c90e952b6" ,
-					name = "サブ効率"
+					name = "サブインク効率UP"
 				} ,
 				new PowerModel() {
 					id = "dac60773-5fad-4b1f-b780-3aeab732d5b7" ,
-					name = "スペ増"
+					name = "スペ増加量UP"
 				} ,
 				new PowerModel() {
 					id = "4d04c4dd-15e6-4a50-81d2-27aa0eeb52ae" ,
-					name = "スペ減"
+					name = "スペ減少量DOWN"
 				} ,
 				new PowerModel() {
 					id = "9eb9ee16-299e-44f6-a4b3-b952835bb940" ,
-					name = "スペ性能"
+					name = "スペ性能UP"
 				} ,
 				new PowerModel() {
 					id = "e2b0c798-994d-474b-b19b-8874286f63a6" ,
-					name = "イカ速"
+					name = "イカ速度UP"
 				} ,
 				new PowerModel() {
 					id = "76e88d20-30ae-416a-990b-df6e6cd75538" ,
-					name = "ヒト速"
+					name = "ヒト速度UP"
 				} ,
 				new PowerModel() {
 					id = "4e518beb-de42-4f48-a069-63a508bc500a" ,
-					name = "ニンジャ"
+					name = "イカニンジャ"
 				} ,
 				new PowerModel() {
 					id = "d4e7221c-cf73-4919-9021-ff1d872b0bba" ,
-					name = "相手インク"
+					name = "相手インク軽減"
 				} ,
 				new PowerModel() {
 					id = "949ac24c-896a-418e-95f7-d40664b87fd6" ,
-					name = "メイン効率"
+					name = "メインインク効率UP"
 				} ,
 				new PowerModel() {
 					id = "816e1f6e-371a-4983-9ef6-b7465ee1315d" ,
-					name = "インク回復"
+					name = "インク回復量UP"
 				} ,
 				new PowerModel() {
 					id = "21d286c9-ff1d-47eb-9af0-0018173b2976" ,
@@ -1057,19 +1057,19 @@ namespace GearListoon.Services {
 				} ,
 				new PowerModel() {
 					id = "f099676a-ee43-433f-a131-eddbc7818e6c" ,
-					name = "スパジャン"
+					name = "スパジャン時間短縮"
 				} ,
 				new PowerModel() {
 					id = "5e88bb43-8b7c-4c04-ba23-4f4658d03f02" ,
-					name = "復活短縮"
+					name = "復活時間短縮"
 				} ,
 				new PowerModel() {
 					id = "2a0fa9f2-e643-4ce2-b99a-57887e09cc74" ,
-					name = "スタダ"
+					name = "スタートダッシュ"
 				} ,
 				new PowerModel() {
 					id = "340a8c1e-3874-433d-ad27-d832ea8b76ce" ,
-					name = "カムバ"
+					name = "カムバック"
 				} ,
 				new PowerModel() {
 					id = "cce89d3b-baea-432e-b445-e59ced55116a" ,
@@ -1081,15 +1081,15 @@ namespace GearListoon.Services {
 				} ,
 				new PowerModel() {
 					id = "b99b9725-ae09-4d13-bf0a-7940a13c02f6" ,
-					name = "マキ短"
+					name = "マーキング時間短縮"
 				} ,
 				new PowerModel() {
 					id = "e8808ea9-636e-46c4-974e-28da6d8eda21" ,
-					name = "サーマル"
+					name = "サーマルインク"
 				} ,
 				new PowerModel() {
 					id = "b7800add-aa15-4973-a051-fe18d06bd5bc" ,
-					name = "対物"
+					name = "対物理攻撃力UP"
 				} ,
 				new PowerModel() {
 					id = "04e060f7-33c8-45fb-9f54-b05c29c98f08" ,
@@ -1097,7 +1097,7 @@ namespace GearListoon.Services {
 				} ,
 				new PowerModel() {
 					id = "00337511-ffe5-460a-bb82-977c7b0866be" ,
-					name = "ペナ"
+					name = "ペナルティ"
 				} ,
 				new PowerModel() {
 					id = "f830c85c-97df-4005-944b-c2ed532c3237" ,
@@ -1105,7 +1105,7 @@ namespace GearListoon.Services {
 				} ,
 				new PowerModel() {
 					id = "91d11d15-9764-4b78-a52f-0afa7b5ee1a9" ,
-					name = "ラスパ"
+					name = "ラストスパート"
 				}
 			};
 			#endregion
