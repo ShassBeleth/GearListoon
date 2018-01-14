@@ -5,6 +5,7 @@ using GearListoon.Services;
 using GearListoon.Views.BrandSelector;
 using GearListoon.Views.GearList;
 using GearListoon.Views.GearPowerSelector;
+using GearListoon.Views.NameInputer;
 using UnityEngine;
 
 namespace GearListoon.Presenters.GearList {
@@ -35,6 +36,8 @@ namespace GearListoon.Presenters.GearList {
 		/// ブランド選択Viewer
 		/// </summary>
 		private BrandSelectorViewer BrandSelectorViewer { set; get; }
+
+		private NameInputerViewer NameInputerViewer { set; get; }
 
 		#endregion
 
@@ -77,6 +80,8 @@ namespace GearListoon.Presenters.GearList {
 		/// </summary>
 		private Action SelectedBrandCallback { set; get; }
 
+		private Action OnClickedNameInputerOkCallback { set; get; }
+
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
@@ -89,6 +94,7 @@ namespace GearListoon.Presenters.GearList {
 			this.GearListViewer = GameObject.Find( "GearList" ).GetComponent<GearListViewer>();
 			this.GearPowerSelectorViewer = GameObject.Find( "GearPowerSelector" ).GetComponent<GearPowerSelectorViewer>();
 			this.BrandSelectorViewer = GameObject.Find( "BrandSelector" ).GetComponent<BrandSelectorViewer>();
+			this.NameInputerViewer = GameObject.Find( "NameInputer" ).GetComponent<NameInputerViewer>();
 
 			#endregion
 
@@ -98,7 +104,7 @@ namespace GearListoon.Presenters.GearList {
 			this.GearListViewer.OnClickedClotheButtonEventHandler = this.OnClickedClotheButtonEvent();
 			this.GearListViewer.OnClickedShoesButtonEventHandler = this.OnClickedShoesButtonEvent();
 			this.GearListViewer.OnClickedAddGearButtonEventHandler = this.OnClickedAddGearButtonEvent();
-
+			
 			#endregion
 
 			#region Resources.Load
@@ -109,8 +115,22 @@ namespace GearListoon.Presenters.GearList {
 
 			#endregion
 
+			#region 名前入力ダイアログ初期設定
+
+			this.NameInputerViewer.OnClickedOkButtonEventHandler = () => {
+				if( this.OnClickedNameInputerOkCallback != null )
+					this.OnClickedNameInputerOkCallback.Invoke();
+				this.NameInputerViewer.gameObject.SetActive( false );
+			};
+			this.NameInputerViewer.OnClickedCancelButtonEventHandler = () => {
+				this.NameInputerViewer.gameObject.SetActive( false );
+			};
+			this.NameInputerViewer.gameObject.SetActive( false );
+
+			#endregion
+
 			#region ギアパワー選択ダイアログ初期設定
-			
+
 			foreach( PowerModel power in this.GearService.GetPowers() ) {
 
 				// ノードのインスタンス作成
@@ -313,6 +333,14 @@ namespace GearListoon.Presenters.GearList {
 					GearNodeViewer nodeViewer = obj.GetComponent<GearNodeViewer>();
 					this.GearListViewer.SetScrollViewNode( gearPosition , nodeViewer );
 					nodeViewer.SetNode( model );
+					nodeViewer.OnClickedGearNameButtonHandler = () => {
+						this.OnClickedNameInputerOkCallback = () => {
+							model.name = this.NameInputerViewer.GetInputField();
+							nodeViewer.SetNode( model );
+							this.UpdateGears();
+						};
+						this.NameInputerViewer.gameObject.SetActive( true );
+					};
 					nodeViewer.OnClickedMainGearButtonEventHandler = () => {
 						this.OnClickedMainPowerButton( model , nodeViewer );
 					};

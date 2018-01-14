@@ -111,7 +111,7 @@ namespace GearListoon.Views.GearList {
 		/// <summary>
 		/// ギア名
 		/// </summary>
-		private Text Name;
+		private Button Name;
 
 		/// <summary>
 		/// ブランドアイコン
@@ -163,7 +163,7 @@ namespace GearListoon.Views.GearList {
 
 			#region 各部品の参照取得
 
-			this.Name = this.gameObject.transform.Find( "Name" ).transform.Find( "Text" ).GetComponent<Text>();
+			this.Name = this.gameObject.transform.Find( "Name" ).GetComponent<Button>();
 
 			this.Brand = this.gameObject.transform.Find( "BrandButton" ).GetComponent<Image>();
 			this.BrandName = this.gameObject.transform.Find( "BrandName" ).GetComponent<Text>();
@@ -219,7 +219,7 @@ namespace GearListoon.Views.GearList {
 					this.Sub3GearPower.sprite = this.spriteService.GetGearPowerSpriteFromDictionary( gear.sub3PowerId );
 				}
 
-				this.Name.text = gear.name;
+				this.Name.transform.Find( "Text" ).GetComponent<Text>().text = gear.name;
 
 			}
 		}
