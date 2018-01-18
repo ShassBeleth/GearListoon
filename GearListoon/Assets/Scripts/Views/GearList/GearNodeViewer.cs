@@ -111,7 +111,7 @@ namespace GearListoon.Views.GearList {
 		/// <summary>
 		/// ギア名
 		/// </summary>
-		private Button Name;
+		private Text Name;
 
 		/// <summary>
 		/// ブランドアイコン
@@ -155,7 +155,15 @@ namespace GearListoon.Views.GearList {
 
 		#endregion
 
+		/// <summary>
+		/// SpriteService
+		/// </summary>
 		private SpriteService spriteService;
+		
+		/// <summary>
+		/// ギア
+		/// </summary>
+		public GearModel Gear { private set; get; }
 
 		public void Awake() {
 
@@ -163,7 +171,7 @@ namespace GearListoon.Views.GearList {
 
 			#region 各部品の参照取得
 
-			this.Name = this.gameObject.transform.Find( "Name" ).GetComponent<Button>();
+			this.Name = this.gameObject.transform.Find( "Name" ).transform.Find( "Text" ).GetComponent<Text>();
 
 			this.Brand = this.gameObject.transform.Find( "BrandButton" ).GetComponent<Image>();
 			this.BrandName = this.gameObject.transform.Find( "BrandName" ).GetComponent<Text>();
@@ -178,11 +186,6 @@ namespace GearListoon.Views.GearList {
 			#endregion
 
 		}
-
-		/// <summary>
-		/// ギア
-		/// </summary>
-		public GearModel Gear { private set; get; }
 		
 		/// <summary>
 		/// ノードの設定
@@ -219,7 +222,7 @@ namespace GearListoon.Views.GearList {
 					this.Sub3GearPower.sprite = this.spriteService.GetGearPowerSpriteFromDictionary( gear.sub3PowerId );
 				}
 
-				this.Name.transform.Find( "Text" ).GetComponent<Text>().text = gear.name;
+				this.Name.text = gear.name;
 
 			}
 		}

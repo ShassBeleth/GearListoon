@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using GearListoon.Models;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -99,13 +97,8 @@ namespace GearListoon.Views.GearList {
 		/// </summary>
 		private GameObject ShoesScrollContent { set; get; }
 
-		/// <summary>
-		/// ギアノード
-		/// </summary>
-		private GameObject GearNode { set; get; }
-
-		#endregion 
-
+		#endregion
+		
 		public void Start() {
 
 			#region 画面部品参照取得
@@ -142,7 +135,7 @@ namespace GearListoon.Views.GearList {
 		/// <summary>
 		/// 頭リスト初期化
 		/// </summary>
-		public void ResetHeadScrollContent() {
+		private void ResetHeadScrollContent() {
 			foreach( Transform child in this.HeadScrollContent.transform ) {
 				GameObject.Destroy( child.gameObject );
 			}
@@ -151,7 +144,7 @@ namespace GearListoon.Views.GearList {
 		/// <summary>
 		/// 服リスト初期化
 		/// </summary>
-		public void ResetClotheScrollContent() {
+		private void ResetClotheScrollContent() {
 			foreach( Transform child in this.ClotheScrollContent.transform ) {
 				GameObject.Destroy( child.gameObject );
 			}
@@ -160,7 +153,7 @@ namespace GearListoon.Views.GearList {
 		/// <summary>
 		/// 靴リスト初期化
 		/// </summary>
-		public void ResetShoesScrollContent() {
+		private void ResetShoesScrollContent() {
 			foreach( Transform child in this.ShoesScrollContent.transform ) {
 				GameObject.Destroy( child.gameObject );
 			}
@@ -193,7 +186,7 @@ namespace GearListoon.Views.GearList {
 		/// 頭ノードを設定
 		/// </summary>
 		/// <param name="nodes">ノード</param>
-		public void SetHeadScrollViewNode( GearNodeViewer node ) {
+		private void SetHeadScrollViewNode( GearNodeViewer node ) {
 			node.transform.SetParent( this.HeadScrollContent.transform );
 		}
 
@@ -201,7 +194,7 @@ namespace GearListoon.Views.GearList {
 		/// 服ノードを設定
 		/// </summary>
 		/// <param name="nodes">ノード</param>
-		public void SetClotheScrollViewNode( GearNodeViewer node ) {
+		private void SetClotheScrollViewNode( GearNodeViewer node ) {
 			node.transform.SetParent( this.ClotheScrollContent.transform );
 		}
 
@@ -209,17 +202,12 @@ namespace GearListoon.Views.GearList {
 		/// 靴ノードを設定
 		/// </summary>
 		/// <param name="nodes">ノード</param>
-		public void SetShoesScrollViewNode( GearNodeViewer node ) {
+		private void SetShoesScrollViewNode( GearNodeViewer node ) {
 			node.transform.SetParent( this.ShoesScrollContent.transform );
 		}
 
 		#endregion
-
-		/// <summary>
-		/// 選択中のギア
-		/// </summary>
-		public int GearPosition { private set; get; }
-
+		
 		#region 各スクロールビューを表示
 
 		/// <summary>
@@ -243,8 +231,7 @@ namespace GearListoon.Views.GearList {
 		/// <summary>
 		/// 頭のスクロールビューを表示
 		/// </summary>
-		public void ShowHeadScrollView() {
-			this.GearPosition = 0;
+		private void ShowHeadScrollView() {
 			if( this.HeadScrollView != null )
 				this.HeadScrollView.gameObject.SetActive( true );
 			if( this.ClotheScrollView != null )
@@ -256,8 +243,7 @@ namespace GearListoon.Views.GearList {
 		/// <summary>
 		/// 服のスクロールビューを表示
 		/// </summary>
-		public void ShowClotheScrollView() {
-			this.GearPosition = 1;
+		private void ShowClotheScrollView() {
 			if( this.HeadScrollView != null )
 				this.HeadScrollView.gameObject.SetActive( false );
 			if( this.ClotheScrollView != null )
@@ -269,8 +255,7 @@ namespace GearListoon.Views.GearList {
 		/// <summary>
 		/// 靴のスクロールビューを表示
 		/// </summary>
-		public void ShowShoesScrollView() {
-			this.GearPosition = 2;
+		private void ShowShoesScrollView() {
 			if( this.HeadScrollView != null )
 				this.HeadScrollView.gameObject.SetActive( false );
 			if( this.ClotheScrollView != null )
@@ -281,42 +266,6 @@ namespace GearListoon.Views.GearList {
 
 		#endregion
 		
-		/// <summary>
-		/// 頭ギア一覧取得
-		/// </summary>
-		/// <returns></returns>
-		public List<GearModel> GetHeadGears() {
-			List<GearModel> gears = new List<GearModel>();
-			foreach( Transform child in this.HeadScrollContent.transform ) {
-				gears.Add( child.GetComponent<GearNodeViewer>().Gear );
-			}
-			return gears;
-		}
-
-		/// <summary>
-		/// 服ギア一覧取得
-		/// </summary>
-		/// <returns></returns>
-		public List<GearModel> GetClotheGears() {
-			List<GearModel> gears = new List<GearModel>();
-			foreach( Transform child in this.ClotheScrollContent.transform ) {
-				gears.Add( child.GetComponent<GearNodeViewer>().Gear );
-			}
-			return gears;
-		}
-
-		/// <summary>
-		/// 靴ギア一覧取得
-		/// </summary>
-		/// <returns></returns>
-		public List<GearModel> GetShoesGears() {
-			List<GearModel> gears = new List<GearModel>();
-			foreach( Transform child in this.ShoesScrollContent.transform ) {
-				gears.Add( child.GetComponent<GearNodeViewer>().Gear );
-			}
-			return gears;
-		}
-
 	}
 
 }

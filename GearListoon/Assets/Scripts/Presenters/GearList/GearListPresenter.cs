@@ -18,7 +18,7 @@ namespace GearListoon.Presenters.GearList {
 		/// <summary>
 		/// Service
 		/// </summary>
-		private Service GearService { set; get; }
+		private GearService GearService { set; get; }
 		
 		#region Viewer
 
@@ -37,6 +37,9 @@ namespace GearListoon.Presenters.GearList {
 		/// </summary>
 		private BrandSelectorViewer BrandSelectorViewer { set; get; }
 
+		/// <summary>
+		/// 名前入力Viewer
+		/// </summary>
 		private NameInputerViewer NameInputerViewer { set; get; }
 
 		#endregion
@@ -59,7 +62,9 @@ namespace GearListoon.Presenters.GearList {
 		private GameObject BrandSelectorNode { set; get; }
 
 		#endregion
-		
+
+		#region ギアパワー選択ダイアログ
+
 		/// <summary>
 		/// ギアパワー選択ダイアログから選んだギアパワー
 		/// </summary>
@@ -71,6 +76,28 @@ namespace GearListoon.Presenters.GearList {
 		private Action SelectedGearPowerCallback { set; get; }
 
 		/// <summary>
+		/// ギアパワーノードクリック時イベント
+		/// </summary>
+		/// <param name="nodeViewer">ノード</param>
+		private void OnClickedGearPowerNodeButton( GearPowerSelectorNodeViewer nodeViewer ) {
+			this.selectedGearPower = nodeViewer.PowerModel;
+			this.GearPowerSelectorViewer.gameObject.SetActive( false );
+			if( this.SelectedGearPowerCallback != null )
+				this.SelectedGearPowerCallback.Invoke();
+		}
+
+		/// <summary>
+		/// ギアパワー選択ダイアログ表示
+		/// </summary>
+		private void ShowGearPowerSelectorViewer() {
+			this.GearPowerSelectorViewer.gameObject.SetActive( true );
+		}
+		
+		#endregion
+
+		#region ブランド選択ダイアログ
+
+		/// <summary>
 		/// ブランド選択ダイアログから選んだブランド
 		/// </summary>
 		private BrandModel selectedBrand;
@@ -80,14 +107,42 @@ namespace GearListoon.Presenters.GearList {
 		/// </summary>
 		private Action SelectedBrandCallback { set; get; }
 
+		/// <summary>
+		/// ブランドノードクリック時イベント
+		/// </summary>
+		/// <param name="nodeViewer">ノード</param>
+		private void OnClickedBrandNodeButton( BrandSelectorNodeViewer nodeViewer ) {
+			this.selectedBrand = nodeViewer.BrandModel;
+			this.BrandSelectorViewer.gameObject.SetActive( false );
+			if( this.SelectedBrandCallback != null )
+				this.SelectedBrandCallback.Invoke();
+		}
+
+		/// <summary>
+		/// ブランド選択ダイアログ表示
+		/// </summary>
+		private void ShowBrandSelectorViewer() {
+			this.BrandSelectorViewer.gameObject.SetActive( true );
+		}
+		
+		#endregion
+
+		/// <summary>
+		/// 名前入力でOKボタン押下時コールバック
+		/// </summary>
 		private Action OnClickedNameInputerOkCallback { set; get; }
+
+		/// <summary>
+		/// 選択中のギア
+		/// </summary>
+		private int gearPosition { set; get; }
 
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		public GearListPresenter() {
 
-			this.GearService = new Service( new CSVService() );
+			this.GearService = new GearService( new CSVService() );
 			
 			#region Viewerの取得
 
@@ -116,16 +171,16 @@ namespace GearListoon.Presenters.GearList {
 			#endregion
 
 			#region 名前入力ダイアログ初期設定
-
+			
 			this.NameInputerViewer.OnClickedOkButtonEventHandler = () => {
 				if( this.OnClickedNameInputerOkCallback != null )
 					this.OnClickedNameInputerOkCallback.Invoke();
-				this.NameInputerViewer.gameObject.SetActive( false );
+				this.NameInputerViewer.SetActive( false );
 			};
 			this.NameInputerViewer.OnClickedCancelButtonEventHandler = () => {
-				this.NameInputerViewer.gameObject.SetActive( false );
+				this.NameInputerViewer.SetActive( false );
 			};
-			this.NameInputerViewer.gameObject.SetActive( false );
+			this.NameInputerViewer.SetActive( false );
 
 			#endregion
 
@@ -173,28 +228,6 @@ namespace GearListoon.Presenters.GearList {
 
 		}
 
-		/// <summary>
-		/// ブランドノードクリック時イベント
-		/// </summary>
-		/// <param name="nodeViewer">ノード</param>
-		private void OnClickedBrandNodeButton( BrandSelectorNodeViewer nodeViewer ) {
-			this.selectedBrand = nodeViewer.BrandModel;
-			this.BrandSelectorViewer.gameObject.SetActive( false );
-			if( this.SelectedBrandCallback != null )
-				this.SelectedBrandCallback.Invoke();
-		}
-
-		/// <summary>
-		/// ギアパワーノードクリック時イベント
-		/// </summary>
-		/// <param name="nodeViewer">ノード</param>
-		private void OnClickedGearPowerNodeButton( GearPowerSelectorNodeViewer nodeViewer ) {
-			this.selectedGearPower = nodeViewer.PowerModel;
-			this.GearPowerSelectorViewer.gameObject.SetActive( false );
-			if( this.SelectedGearPowerCallback != null )
-				this.SelectedGearPowerCallback.Invoke();
-		}
-
 		#region ギアパワー押下時イベント
 
 		/// <summary>
@@ -208,6 +241,33 @@ namespace GearListoon.Presenters.GearList {
 				model.mainPower = this.selectedGearPower;
 				model.mainPowerId = this.selectedGearPower.id;
 				viewer.SetNode( model );
+				switch( this.gearPosition ) {
+					case 0:
+						for( int i = 0 ; i < this.GearService.GetHeadGears().Count ; i++ ) {
+							if( model.id.Equals( this.GearService.GetHeadGears()[ i ].id ) ) {
+								this.GearService.GetHeadGears()[ i ] = model;
+								break;
+							}
+						}
+						break;
+					case 1:
+						for( int i = 0 ; i < this.GearService.GetClotheGears().Count ; i++ ) {
+							if( model.id.Equals( this.GearService.GetClotheGears()[ i ].id ) ) {
+								this.GearService.GetClotheGears()[ i ] = model;
+								break;
+							}
+						}
+						break;
+					case 2:
+						for( int i = 0 ; i < this.GearService.GetShoesGears().Count ; i++ ) {
+							if( model.id.Equals( this.GearService.GetShoesGears()[ i ].id ) ) {
+								this.GearService.GetShoesGears()[ i ] = model;
+								break;
+							}
+						}
+						break;
+				}
+
 				this.UpdateGears();
 			};
 		}
@@ -223,6 +283,33 @@ namespace GearListoon.Presenters.GearList {
 				model.sub1Power = this.selectedGearPower;
 				model.sub1PowerId = this.selectedGearPower.id;
 				viewer.SetNode( model );
+				switch( this.gearPosition ) {
+					case 0:
+						for( int i = 0 ; i < this.GearService.GetHeadGears().Count ; i++ ) {
+							if( model.id.Equals( this.GearService.GetHeadGears()[ i ].id ) ) {
+								this.GearService.GetHeadGears()[ i ] = model;
+								break;
+							}
+						}
+						break;
+					case 1:
+						for( int i = 0 ; i < this.GearService.GetClotheGears().Count ; i++ ) {
+							if( model.id.Equals( this.GearService.GetClotheGears()[ i ].id ) ) {
+								this.GearService.GetClotheGears()[ i ] = model;
+								break;
+							}
+						}
+						break;
+					case 2:
+						for( int i = 0 ; i < this.GearService.GetShoesGears().Count ; i++ ) {
+							if( model.id.Equals( this.GearService.GetShoesGears()[ i ].id ) ) {
+								this.GearService.GetShoesGears()[ i ] = model;
+								break;
+							}
+						}
+						break;
+				}
+
 				this.UpdateGears();
 			};
 		}
@@ -238,6 +325,33 @@ namespace GearListoon.Presenters.GearList {
 				model.sub2Power = this.selectedGearPower;
 				model.sub2PowerId = this.selectedGearPower.id;
 				viewer.SetNode( model );
+				switch( this.gearPosition ) {
+					case 0:
+						for( int i = 0 ; i < this.GearService.GetHeadGears().Count ; i++ ) {
+							if( model.id.Equals( this.GearService.GetHeadGears()[ i ].id ) ) {
+								this.GearService.GetHeadGears()[ i ] = model;
+								break;
+							}
+						}
+						break;
+					case 1:
+						for( int i = 0 ; i < this.GearService.GetClotheGears().Count ; i++ ) {
+							if( model.id.Equals( this.GearService.GetClotheGears()[ i ].id ) ) {
+								this.GearService.GetClotheGears()[ i ] = model;
+								break;
+							}
+						}
+						break;
+					case 2:
+						for( int i = 0 ; i < this.GearService.GetShoesGears().Count ; i++ ) {
+							if( model.id.Equals( this.GearService.GetShoesGears()[ i ].id ) ) {
+								this.GearService.GetShoesGears()[ i ] = model;
+								break;
+							}
+						}
+						break;
+				}
+
 				this.UpdateGears();
 			};
 		}
@@ -253,6 +367,33 @@ namespace GearListoon.Presenters.GearList {
 				model.sub3Power = this.selectedGearPower;
 				model.sub3PowerId = this.selectedGearPower.id;
 				viewer.SetNode( model );
+				switch( this.gearPosition ) {
+					case 0:
+						for( int i = 0 ; i < this.GearService.GetHeadGears().Count ; i++ ) {
+							if( model.id.Equals( this.GearService.GetHeadGears()[ i ].id ) ) {
+								this.GearService.GetHeadGears()[ i ] = model;
+								break;
+							}
+						}
+						break;
+					case 1:
+						for( int i = 0 ; i < this.GearService.GetClotheGears().Count ; i++ ) {
+							if( model.id.Equals( this.GearService.GetClotheGears()[ i ].id ) ) {
+								this.GearService.GetClotheGears()[ i ] = model;
+								break;
+							}
+						}
+						break;
+					case 2:
+						for( int i = 0 ; i < this.GearService.GetShoesGears().Count ; i++ ) {
+							if( model.id.Equals( this.GearService.GetShoesGears()[ i ].id ) ) {
+								this.GearService.GetShoesGears()[ i ] = model;
+								break;
+							}
+						}
+						break;
+				}
+
 				this.UpdateGears();
 			};
 		}
@@ -270,6 +411,32 @@ namespace GearListoon.Presenters.GearList {
 				model.brand = this.selectedBrand;
 				model.brandId = this.selectedBrand.id;
 				viewer.SetNode( model );
+				switch( this.gearPosition ) {
+					case 0:
+						for( int i = 0 ; i < this.GearService.GetHeadGears().Count ; i++ ) {
+							if( model.id.Equals( this.GearService.GetHeadGears()[i].id ) ) {
+								this.GearService.GetHeadGears()[ i ] = model;
+								break;
+							}
+						}
+						break;
+					case 1:
+						for( int i = 0 ; i < this.GearService.GetClotheGears().Count ; i++ ) {
+							if( model.id.Equals( this.GearService.GetClotheGears()[ i ].id ) ) {
+								this.GearService.GetClotheGears()[ i ] = model;
+								break;
+							}
+						}
+						break;
+					case 2:
+						for( int i = 0 ; i < this.GearService.GetShoesGears().Count ; i++ ) {
+							if( model.id.Equals( this.GearService.GetShoesGears()[ i ].id ) ) {
+								this.GearService.GetShoesGears()[ i ] = model;
+								break;
+							}
+						}
+						break;
+				}
 				this.UpdateGears();
 			};
 		}
@@ -278,19 +445,19 @@ namespace GearListoon.Presenters.GearList {
 		/// ギア一覧を更新する
 		/// </summary>
 		private void UpdateGears() {
-			switch( this.GearListViewer.GearPosition ) {
+			switch( this.gearPosition ) {
 				case 0:
-					this.GearService.UpdateHeadGears( this.GearListViewer.GetHeadGears() );
+					this.GearService.UpdateHeadGears( this.GearService.GetHeadGears() );
 					break;
 				case 1:
-					this.GearService.UpdateClotheGears( this.GearListViewer.GetClotheGears() );
+					this.GearService.UpdateClotheGears( this.GearService.GetClotheGears() );
 					break;
 				case 2:
-					this.GearService.UpdateShoesGears( this.GearListViewer.GetShoesGears() );
+					this.GearService.UpdateShoesGears( this.GearService.GetShoesGears() );
 					break;
 			}
 		}
-
+		
 		#region ヘッダ部の各ボタン押下時イベント
 
 		/// <summary>
@@ -325,6 +492,7 @@ namespace GearListoon.Presenters.GearList {
 		/// <returns></returns>
 		private Action OnClickedGearButtonEvent( List<GearModel> gears , int gearPosition ) {
 			return () => {
+				this.gearPosition = gearPosition;
 				this.GearListViewer.ResetScrollContent( gearPosition );
 				foreach( GearModel model in gears ) {
 
@@ -335,11 +503,11 @@ namespace GearListoon.Presenters.GearList {
 					nodeViewer.SetNode( model );
 					nodeViewer.OnClickedGearNameButtonHandler = () => {
 						this.OnClickedNameInputerOkCallback = () => {
-							model.name = this.NameInputerViewer.GetInputField();
+							model.name = this.NameInputerViewer.GetInputFieldText();
 							nodeViewer.SetNode( model );
 							this.UpdateGears();
 						};
-						this.NameInputerViewer.gameObject.SetActive( true );
+						this.NameInputerViewer.SetActive( true );
 					};
 					nodeViewer.OnClickedMainGearButtonEventHandler = () => {
 						this.OnClickedMainPowerButton( model , nodeViewer );
@@ -368,20 +536,6 @@ namespace GearListoon.Presenters.GearList {
 		#endregion
 
 		/// <summary>
-		/// ギアパワー選択ダイアログ表示
-		/// </summary>
-		private void ShowGearPowerSelectorViewer() {
-			this.GearPowerSelectorViewer.gameObject.SetActive( true );
-		}
-
-		/// <summary>
-		/// ブランド選択ダイアログ表示
-		/// </summary>
-		private void ShowBrandSelectorViewer() {
-			this.BrandSelectorViewer.gameObject.SetActive( true );
-		}
-
-		/// <summary>
 		/// ギア追加ボタン押下時イベント
 		/// </summary>
 		/// <returns></returns>
@@ -391,25 +545,23 @@ namespace GearListoon.Presenters.GearList {
 					id = Guid.NewGuid().ToString() ,
 					name = ""
 				};
-				switch( this.GearListViewer.GearPosition ) {
+				switch( this.gearPosition ) {
 					case 0:
 						this.GearService.GetHeadGears().Add( model );
 						this.OnClickedHeadButtonEvent().Invoke();
-						new CSVService().WriteHeadGearCsv( this.GearService.GetHeadGears() );
 						break;
 					case 1:
 						this.GearService.GetClotheGears().Add( model );
 						this.OnClickedClotheButtonEvent().Invoke();
-						new CSVService().WriteClotheGearCsv( this.GearService.GetClotheGears() );
 						break;
 					case 2:
 						this.GearService.GetShoesGears().Add( model );
 						this.OnClickedShoesButtonEvent().Invoke();
-						new CSVService().WriteShoesGearCsv( this.GearService.GetShoesGears() );
 						break;
 					default:
 						break;
 				}
+				this.UpdateGears();
 			};
 		}
 		

@@ -6,7 +6,7 @@ namespace GearListoon.Services {
 	/// <summary>
 	/// Service
 	/// </summary>
-	public class Service {
+	public class GearService {
 
 		/// <summary>
 		/// ユーザ一覧
@@ -66,7 +66,7 @@ namespace GearListoon.Services {
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		public Service( CSVService csvService ) {
+		public GearService( CSVService csvService ) {
 
 			this.csvService = csvService;
 
@@ -1434,7 +1434,7 @@ namespace GearListoon.Services {
 		}
 
 		/// <summary>
-		/// 頭ギア更新
+		/// 服ギア更新
 		/// </summary>
 		/// <param name="gears"></param>
 		public void UpdateClotheGears( List<GearModel> gears ) {
@@ -1443,7 +1443,7 @@ namespace GearListoon.Services {
 		}
 
 		/// <summary>
-		/// 頭ギア更新
+		/// 靴ギア更新
 		/// </summary>
 		/// <param name="gears"></param>
 		public void UpdateShoesGears( List<GearModel> gears ) {

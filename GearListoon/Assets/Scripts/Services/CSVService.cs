@@ -5,20 +5,42 @@ using UnityEngine;
 
 namespace GearListoon.Services {
 
+	/// <summary>
+	/// CSVService
+	/// </summary>
 	public class CSVService {
 
+		#region 読み込み
+
+		/// <summary>
+		/// 頭ギア読み込み
+		/// </summary>
+		/// <returns></returns>
 		public List<GearModel> ReadHeadGearCsv() {
 			return this.ReadGearCsv( 0 );
 		}
 
+		/// <summary>
+		/// 服ギア読み込み
+		/// </summary>
+		/// <returns></returns>
 		public List<GearModel> ReadClotheGearCsv() {
 			return this.ReadGearCsv( 1 );
 		}
 
+		/// <summary>
+		/// 靴ギア読み込み
+		/// </summary>
+		/// <returns></returns>
 		public List<GearModel> ReadShoesGearCsv() {
 			return this.ReadGearCsv( 2 );
 		}
 		
+		/// <summary>
+		/// 指定ギアの読み込み
+		/// </summary>
+		/// <param name="gearPosition"></param>
+		/// <returns></returns>
 		private List<GearModel> ReadGearCsv( int gearPosition ) {
 			
 			string csvName =
@@ -75,18 +97,39 @@ namespace GearListoon.Services {
 
 		}
 
+		#endregion
+
+		#region 書き込み
+
+		/// <summary>
+		/// 頭ギア書き込み
+		/// </summary>
+		/// <param name="gears"></param>
 		public void WriteHeadGearCsv( List<GearModel> gears ) {
 			this.WriteCsv( gears , 0 );
 		}
 
+		/// <summary>
+		/// 服ギア書き込み
+		/// </summary>
+		/// <param name="gears"></param>
 		public void WriteClotheGearCsv( List<GearModel> gears ) {
 			this.WriteCsv( gears , 1 );
 		}
 
+		/// <summary>
+		/// 靴ギア書き込み
+		/// </summary>
+		/// <param name="gears"></param>
 		public void WriteShoesGearCsv( List<GearModel> gears ) {
 			this.WriteCsv( gears , 2 );
 		}
 
+		/// <summary>
+		/// 各ギアの書き込み
+		/// </summary>
+		/// <param name="gears"></param>
+		/// <param name="gearPosition"></param>
 		private void WriteCsv( List<GearModel> gears , int gearPosition ) { 
 			
 			string csvName =
@@ -126,6 +169,8 @@ namespace GearListoon.Services {
 			streamWriter.Close();
 			
 		}
+
+		#endregion
 
 	}
 

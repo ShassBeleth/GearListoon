@@ -8,13 +8,24 @@ namespace GearListoon.Services {
 	/// </summary>
 	public class SpriteService {
 
+		#region Singletonパターン
+
+		/// <summary>
+		/// インスタンス
+		/// </summary>
 		private static SpriteService instance = null;
 
+		/// <summary>
+		/// インスタンス取得
+		/// </summary>
+		/// <returns></returns>
 		public static SpriteService GetInstance() {
 			if( instance == null )
 				instance = new SpriteService();
 			return instance;
 		}
+
+		#endregion
 
 		/// <summary>
 		/// ギアパワーSprites
@@ -50,13 +61,16 @@ namespace GearListoon.Services {
 			this.gearPowerSpritesDictionary = new Dictionary<string , Sprite>();
 			this.brandSpritesDictionary = new Dictionary<string , Sprite>();
 
+			#region nothingSprite取得
+
 			Sprite[] nothingSprites = Resources.LoadAll<Sprite>( "Icon/Nothing" );
 			foreach( Sprite sprite in nothingSprites ) {
 				if( "Nothing".Equals( sprite.name ) )
 					this.nothingSprite = sprite;
 			}
 
-
+			#endregion
+			
 			this.gearSprites = Resources.LoadAll<Sprite>( "Icon/Gear" );
 			this.brandSprites = Resources.LoadAll<Sprite>( "Icon/Brand" );
 
