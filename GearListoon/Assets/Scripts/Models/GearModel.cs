@@ -23,22 +23,22 @@
 		/// <summary>
 		/// メインギアパワーID
 		/// </summary>
-		public string mainPowerId;
+		public string mainPowerId = "none";
 
 		/// <summary>
 		/// サブ1ギアパワーID
 		/// </summary>
-		public string sub1PowerId;
+		public string sub1PowerId = "none";
 
 		/// <summary>
 		/// サブ2ギアパワーID
 		/// </summary>
-		public string sub2PowerId;
+		public string sub2PowerId = "none";
 
 		/// <summary>
 		/// サブ3ギアパワーID
 		/// </summary>
-		public string sub3PowerId;
+		public string sub3PowerId = "none";
 
 		/// <summary>
 		/// ブランド

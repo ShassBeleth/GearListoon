@@ -9,18 +9,12 @@ namespace GearListoon.Managers {
 	/// </summary>
 	public class AppManager : MonoBehaviour {
 
-		public void Awake() {
-
-			// サービスのインスタンス生成だけ先にする
-			SpriteService.GetInstance();
-
-		}
-
-		public void Start() {
-			
-			new GearListPresenter();
-
-		}
+		// サービスのインスタンス生成だけ先にする
+		public void Awake()
+			=> SpriteService.GetInstance();
+		
+		public void Start() 
+			=> new GearListPresenter();
 		
 	}
 

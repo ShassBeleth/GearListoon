@@ -75,6 +75,7 @@ namespace GearListoon.Services {
 			this.brandSprites = Resources.LoadAll<Sprite>( "Icon/Brand" );
 
 			#region ギアパワー一覧
+			this.gearPowerSpritesDictionary.Add( "none" , this.nothingSprite );
 			this.gearPowerSpritesDictionary.Add(
 				"9a28baa7-520a-4e1a-9348-391d5ed05a99" ,
 				this.GetGearSprite( "SubPerformanceUp" )

@@ -18,12 +18,12 @@
 		/// <summary>
 		/// つきやすいギアパワー
 		/// </summary>
-		public string easyToHoldPowerId;
+		public string easyToHoldPowerId = "none";
 
 		/// <summary>
 		/// つきにくいギアパワー
 		/// </summary>
-		public string difficultToHoldPowerId;
+		public string difficultToHoldPowerId = "none";
 
 		/// <summary>
 		/// つきやすいギアパワー

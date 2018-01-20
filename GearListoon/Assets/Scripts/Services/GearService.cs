@@ -1008,6 +1008,10 @@ namespace GearListoon.Services {
 			#region ギアパワー一覧
 			this.powers = new List<PowerModel>() {
 				new PowerModel() {
+					id = "none" ,
+					name = "無し"
+				} ,
+				new PowerModel() {
 					id = "9a28baa7-520a-4e1a-9348-391d5ed05a99" ,
 					name = "サブ性能UP"
 				} ,

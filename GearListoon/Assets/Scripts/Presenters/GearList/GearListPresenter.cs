@@ -135,7 +135,7 @@ namespace GearListoon.Presenters.GearList {
 		/// <summary>
 		/// 選択中のギア
 		/// </summary>
-		private int gearPosition { set; get; }
+		private int GearPosition { set; get; }
 
 		/// <summary>
 		/// コンストラクタ
@@ -241,7 +241,7 @@ namespace GearListoon.Presenters.GearList {
 				model.mainPower = this.selectedGearPower;
 				model.mainPowerId = this.selectedGearPower.id;
 				viewer.SetNode( model );
-				switch( this.gearPosition ) {
+				switch( this.GearPosition ) {
 					case 0:
 						for( int i = 0 ; i < this.GearService.GetHeadGears().Count ; i++ ) {
 							if( model.id.Equals( this.GearService.GetHeadGears()[ i ].id ) ) {
@@ -283,7 +283,7 @@ namespace GearListoon.Presenters.GearList {
 				model.sub1Power = this.selectedGearPower;
 				model.sub1PowerId = this.selectedGearPower.id;
 				viewer.SetNode( model );
-				switch( this.gearPosition ) {
+				switch( this.GearPosition ) {
 					case 0:
 						for( int i = 0 ; i < this.GearService.GetHeadGears().Count ; i++ ) {
 							if( model.id.Equals( this.GearService.GetHeadGears()[ i ].id ) ) {
@@ -325,7 +325,7 @@ namespace GearListoon.Presenters.GearList {
 				model.sub2Power = this.selectedGearPower;
 				model.sub2PowerId = this.selectedGearPower.id;
 				viewer.SetNode( model );
-				switch( this.gearPosition ) {
+				switch( this.GearPosition ) {
 					case 0:
 						for( int i = 0 ; i < this.GearService.GetHeadGears().Count ; i++ ) {
 							if( model.id.Equals( this.GearService.GetHeadGears()[ i ].id ) ) {
@@ -367,7 +367,7 @@ namespace GearListoon.Presenters.GearList {
 				model.sub3Power = this.selectedGearPower;
 				model.sub3PowerId = this.selectedGearPower.id;
 				viewer.SetNode( model );
-				switch( this.gearPosition ) {
+				switch( this.GearPosition ) {
 					case 0:
 						for( int i = 0 ; i < this.GearService.GetHeadGears().Count ; i++ ) {
 							if( model.id.Equals( this.GearService.GetHeadGears()[ i ].id ) ) {
@@ -411,7 +411,7 @@ namespace GearListoon.Presenters.GearList {
 				model.brand = this.selectedBrand;
 				model.brandId = this.selectedBrand.id;
 				viewer.SetNode( model );
-				switch( this.gearPosition ) {
+				switch( this.GearPosition ) {
 					case 0:
 						for( int i = 0 ; i < this.GearService.GetHeadGears().Count ; i++ ) {
 							if( model.id.Equals( this.GearService.GetHeadGears()[i].id ) ) {
@@ -445,7 +445,7 @@ namespace GearListoon.Presenters.GearList {
 		/// ギア一覧を更新する
 		/// </summary>
 		private void UpdateGears() {
-			switch( this.gearPosition ) {
+			switch( this.GearPosition ) {
 				case 0:
 					this.GearService.UpdateHeadGears( this.GearService.GetHeadGears() );
 					break;
@@ -492,7 +492,7 @@ namespace GearListoon.Presenters.GearList {
 		/// <returns></returns>
 		private Action OnClickedGearButtonEvent( List<GearModel> gears , int gearPosition ) {
 			return () => {
-				this.gearPosition = gearPosition;
+				this.GearPosition = gearPosition;
 				this.GearListViewer.ResetScrollContent( gearPosition );
 				foreach( GearModel model in gears ) {
 
@@ -545,7 +545,7 @@ namespace GearListoon.Presenters.GearList {
 					id = Guid.NewGuid().ToString() ,
 					name = ""
 				};
-				switch( this.gearPosition ) {
+				switch( this.GearPosition ) {
 					case 0:
 						this.GearService.GetHeadGears().Add( model );
 						this.OnClickedHeadButtonEvent().Invoke();
